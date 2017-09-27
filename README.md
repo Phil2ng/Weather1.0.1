@@ -27,4 +27,5 @@
 
 12. 在选择城市界面增加一个EditText控件，并通过用户的输入的城市名称进行搜索。
 
+
 ![Aaron Swartz](https://github.com/ElonBrown/Weather1.0.1/blob/master/01.png)

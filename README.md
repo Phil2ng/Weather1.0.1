@@ -1,5 +1,7 @@
-# Weather1.0.1
+﻿# Weather1.0.1
 移动软件开发课堂实训
+
+![Aaron Swartz](https://github.com/ElonBrown/Weather1.0.1/blob/master/01.png)
 
 **要制作的界面如图所示，可以分为四部分“工具栏”、“今日天气信息”、“一周天气信息”，“其他”。**
 
@@ -25,7 +27,6 @@
 
 11.单击选中的城市，并将结果返回给主界面。
 
-12. 在选择城市界面增加一个EditText控件，并通过用户的输入的城市名称进行搜索。
+12.在选择城市界面增加一个EditText控件，并通过用户的输入的城市名称进行搜索。
 
 
-![Aaron Swartz](https://github.com/ElonBrown/Weather1.0.1/blob/master/01.png)

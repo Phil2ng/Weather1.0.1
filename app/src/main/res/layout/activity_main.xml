@@ -108,7 +108,7 @@
                 android:textSize="15.0sp" />
             <!--添加一项温度信息-->
             <TextView
-                android:id="@+id/temperature0"
+                android:id="@+id/temperature_now"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -179,7 +179,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@id/temperature0"
+                android:layout_below="@id/temperature_now"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="5.0dip">
                 <!-- 天气情况图片示例 -->

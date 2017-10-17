@@ -22,6 +22,8 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     private static final int UPDATE_TODAY_WEATHER = 1;
@@ -93,6 +95,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == R.id.title_update_btn) {
             SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
+            //101160101  101010100
             String cityCode = sharedPreferences.getString("main_city_code", "101160101");
             Log.d("myWeather", cityCode);
 
@@ -250,6 +253,51 @@ public class MainActivity extends Activity implements View.OnClickListener {
         temperatureTv.setText(todayWeather.getHigh() + "~" + todayWeather.getLow());
         climateTv.setText(todayWeather.getType());
         windTv.setText(todayWeather.getFengxiang() + ": " + todayWeather.getFengli());
+        int[] imagePm25 = {
+                R.drawable.biz_plugin_weather_0_50,
+                R.drawable.biz_plugin_weather_51_100,
+                R.drawable.biz_plugin_weather_101_150,
+                R.drawable.biz_plugin_weather_151_200,
+                R.drawable.biz_plugin_weather_201_300,
+                R.drawable.biz_plugin_weather_201_300,
+                R.drawable.biz_plugin_weather_greater_300
+        };
+        //todayWeather.setPm25("500");
+        int pmIndex = Integer.valueOf(todayWeather.getPm25());
+        pmIndex = Math.min((pmIndex - 1) / 50, 6);
+        pmImg.setImageDrawable(getResources().getDrawable(imagePm25[pmIndex]));
+        //todayWeather.setType("哈哈哈");
+        Map<String, Integer> imageWeather = new HashMap<String, Integer>() {
+            {
+                put("暴雪", R.drawable.biz_plugin_weather_baoxue);
+                put("暴雨", R.drawable.biz_plugin_weather_baoyu);
+                put("大暴雨", R.drawable.biz_plugin_weather_dabaoyu);
+                put("大雪", R.drawable.biz_plugin_weather_daxue);
+                put("大雨", R.drawable.biz_plugin_weather_dayu);
+                put("多云", R.drawable.biz_plugin_weather_duoyun);
+                put("雷阵雨", R.drawable.biz_plugin_weather_leizhenyu);
+                put("雷阵雨冰雹", R.drawable.biz_plugin_weather_leizhenyubingbao);
+                put("晴", R.drawable.biz_plugin_weather_qing);
+                put("沙尘暴", R.drawable.biz_plugin_weather_shachenbao);
+                put("特大暴雨", R.drawable.biz_plugin_weather_tedabaoyu);
+                put("雾", R.drawable.biz_plugin_weather_wu);
+                put("小雪", R.drawable.biz_plugin_weather_xiaoxue);
+                put("小雨", R.drawable.biz_plugin_weather_xiaoyu);
+                put("阴", R.drawable.biz_plugin_weather_yin);
+                put("雨夹雪", R.drawable.biz_plugin_weather_yujiaxue);
+                put("阵雪", R.drawable.biz_plugin_weather_zhenxue);
+                put("阵雨", R.drawable.biz_plugin_weather_zhenyu);
+                put("中雪", R.drawable.biz_plugin_weather_zhongxue);
+                put("中雨", R.drawable.biz_plugin_weather_zhongyu);
+            }
+        };
+        int weatherIndex = R.drawable.biz_plugin_weather_qing;
+        try {
+            weatherIndex = imageWeather.get(todayWeather.getType());
+        } catch (NullPointerException e) {
+            Log.d("myWeather", "出现新的天气类型");
+        }
+        weatherImg.setImageDrawable(getResources().getDrawable(weatherIndex));
         Toast.makeText(MainActivity.this, "更新成功！", Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,4 +1,4 @@
-package cn.edu.pku.weather101;
+package cn.edu.pku.weather101.weather;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,6 +25,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import cn.edu.pku.weather101.R;
+import cn.edu.pku.weather101.bean.TodayWeather;
+import cn.edu.pku.weather101.util.NetUtil;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     private static final int UPDATE_TODAY_WEATHER = 1;

@@ -1,8 +1,4 @@
-package cn.edu.pku.weather101;
-
-/**
- * Created by Administrator on 2017/10/17.
- */
+package cn.edu.pku.weather101.bean;
 
 public class TodayWeather {
     private String city;

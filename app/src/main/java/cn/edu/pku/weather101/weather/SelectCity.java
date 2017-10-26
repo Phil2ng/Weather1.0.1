@@ -1,10 +1,12 @@
-package cn.edu.pku.weather101;
+package cn.edu.pku.weather101.weather;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+
+import cn.edu.pku.weather101.R;
 
 public class SelectCity extends Activity implements View.OnClickListener {
     private ImageView mBackBtn;

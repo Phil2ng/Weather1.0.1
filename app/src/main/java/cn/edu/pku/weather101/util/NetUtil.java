@@ -1,4 +1,4 @@
-package cn.edu.pku.weather101;
+package cn.edu.pku.weather101.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

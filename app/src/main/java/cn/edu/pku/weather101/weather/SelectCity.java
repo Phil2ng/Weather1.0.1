@@ -2,6 +2,7 @@ package cn.edu.pku.weather101.weather;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import static android.R.layout.simple_expandable_list_item_1;
 
 public class SelectCity extends Activity implements View.OnClickListener {
     private ImageView mBackBtn;
+    private TextView mTitleName;
     private ListView mListView;
     private List<City> mCityList;
 
@@ -38,6 +40,11 @@ public class SelectCity extends Activity implements View.OnClickListener {
         mBackBtn = (ImageView) findViewById(R.id.title_back);
         mBackBtn.setOnClickListener(this);
 
+        Intent getIntent = getIntent();
+        String nowCityName = getIntent.getStringExtra("nowCityName");
+        mTitleName = (TextView) findViewById(R.id.title_name);
+        mTitleName.setText("当前城市：" + nowCityName);
+
         mListView = (ListView) findViewById(R.id.list_view);
         MyApplication myApplication = (MyApplication) getApplication();
         mCityList = myApplication.getCityList();
@@ -51,11 +58,11 @@ public class SelectCity extends Activity implements View.OnClickListener {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("SelectCity","您单击了：" + position);
+                Log.d("SelectCity", "您单击了：" + position);
                 City city = mCityList.get(position);
                 Intent intent = new Intent();
-                intent.putExtra("cityCode",city.getNumber());
-                setResult(RESULT_OK,intent);
+                intent.putExtra("cityCode", city.getNumber());
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
@@ -67,7 +74,9 @@ public class SelectCity extends Activity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.title_back:
                 Intent intent = new Intent();
-                intent.putExtra("cityCode", "101160101");
+                SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
+                String cityCode = sharedPreferences.getString("city_code", "101010100");
+                intent.putExtra("cityCode", cityCode);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;

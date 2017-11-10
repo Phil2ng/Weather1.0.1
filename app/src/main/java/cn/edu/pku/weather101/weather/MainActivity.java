@@ -32,6 +32,9 @@ import cn.edu.pku.weather101.util.NetUtil;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     private static final int UPDATE_TODAY_WEATHER = 1;
+    private static final int MIN_CLICK_DELAY_TIME = 1000;
+    private static long lastClickTime;
+
     private ImageView mUpdateBtn, mCitySelect;
     private TextView cityTv, timeTv, humidityTv, temperatureNowTv, weekTv, pmDataTv, pmQualityTv,
             temperatureTv, climateTv, windTv, city_name_Tv;
@@ -69,6 +72,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
 
         initView();
+        mUpdateBtn.performClick();
     }
 
     void initView() {
@@ -101,10 +105,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.title_update_btn) {
+        long curClickTime = System.currentTimeMillis();
+        if (v.getId() == R.id.title_update_btn && (curClickTime - lastClickTime)>MIN_CLICK_DELAY_TIME) {
+            lastClickTime = curClickTime;
             SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
-            //101160101  101010100
-            String cityCode = sharedPreferences.getString("main_city_code", "101010100");
+            String cityCode = sharedPreferences.getString("city_code", "101010100");
             Log.d("myWeather", cityCode);
 
             if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {
@@ -117,6 +122,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
         if (v.getId() == R.id.title_city_manager) {
             Intent intent = new Intent(this, SelectCity.class);
+            intent.putExtra("nowCityName", cityTv.getText());
             // startActivity(intent);
             startActivityForResult(intent, 1);
         }
@@ -276,9 +282,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 R.drawable.biz_plugin_weather_greater_300
         };
         //todayWeather.setPm25("500");
-        int pmIndex = Integer.valueOf(todayWeather.getPm25());
-        pmIndex = Math.min((pmIndex - 1) / 50, 6);
-        pmImg.setImageDrawable(getResources().getDrawable(imagePm25[pmIndex]));
+        if (todayWeather.getPm25()!= null){
+            int pmIndex = Integer.valueOf(todayWeather.getPm25());
+            pmIndex = Math.min((pmIndex - 1) / 50, 6);
+            pmImg.setImageDrawable(getResources().getDrawable(imagePm25[pmIndex]));
+        }
+
         //todayWeather.setType("哈哈哈");
         Map<String, Integer> imageWeather = new HashMap<String, Integer>() {
             {
@@ -317,6 +326,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             String newCityCode = data.getStringExtra("cityCode");
+            SharedPreferences sharedPreferences = getSharedPreferences("config",MODE_PRIVATE);
+            sharedPreferences.edit().putString("city_code",newCityCode).commit();
             Log.d("myWeather", "选择的城市代码为" + newCityCode);
 
             if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {

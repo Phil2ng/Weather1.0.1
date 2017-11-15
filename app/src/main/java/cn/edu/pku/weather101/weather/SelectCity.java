@@ -32,36 +32,36 @@ public class SelectCity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_city);
 
-        initViews();
+        initViews();                                                                                //初始化布局文件
     }
 
     private void initViews() {
 
         mBackBtn = (ImageView) findViewById(R.id.title_back);
-        mBackBtn.setOnClickListener(this);
+        mBackBtn.setOnClickListener(this);                                                          //监听返回按键
 
-        Intent getIntent = getIntent();
+        Intent getIntent = getIntent();                                                             //读取Intent传入的城市名，并显示
         String nowCityName = getIntent.getStringExtra("nowCityName");
         mTitleName = (TextView) findViewById(R.id.title_name);
         mTitleName.setText("当前城市：" + nowCityName);
 
         mListView = (ListView) findViewById(R.id.list_view);
         MyApplication myApplication = (MyApplication) getApplication();
-        mCityList = myApplication.getCityList();
+        mCityList = myApplication.getCityList();                                                    //数据库读取城市列表
         ArrayList mCityName = new ArrayList();
         for (City city : mCityList) {
             String cityName = city.getCity();
             mCityName.add(cityName);
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(SelectCity.this, simple_expandable_list_item_1, mCityName);
-        mListView.setAdapter(adapter);
+        mListView.setAdapter(adapter);                                                              //设置适配器
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {                          //处理点击事件
                 Log.d("SelectCity", "您单击了：" + position);
                 City city = mCityList.get(position);
                 Intent intent = new Intent();
-                intent.putExtra("cityCode", city.getNumber());
+                intent.putExtra("cityCode", city.getNumber());                              //返回选择的cityCode
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -72,7 +72,7 @@ public class SelectCity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.title_back:
+            case R.id.title_back:                                                                   //处理返回单击事件
                 Intent intent = new Intent();
                 SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
                 String cityCode = sharedPreferences.getString("city_code", "101010100");

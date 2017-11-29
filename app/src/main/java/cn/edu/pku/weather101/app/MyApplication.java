@@ -79,7 +79,6 @@ public class MyApplication extends Application {
         new Thread(new Runnable() {
             @Override
             public void run() {
-    // TODO Auto-generated method stub
                 prepareCityList();
             }
         }).start();

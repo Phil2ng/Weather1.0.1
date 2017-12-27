@@ -21,7 +21,6 @@ import cn.edu.pku.weather101.bean.City;
 
 import static android.R.layout.simple_expandable_list_item_1;
 
-
 public class SelectCity extends Activity implements View.OnClickListener {
     private ImageView mBackBtn;
     private TextView mTitleName;

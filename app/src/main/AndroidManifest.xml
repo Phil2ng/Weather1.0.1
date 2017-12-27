@@ -13,14 +13,16 @@
         android:roundIcon="@mipmap/timg"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".weather.MainActivity"/>
-        <activity android:name=".weather.SelectCity" />
-        <activity android:name=".weather.Guide">
+        <activity android:name=".weather.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".weather.SelectCity" />
+        <activity android:name=".weather.Guide">
+
         </activity>
     </application>
 
